@@ -8,6 +8,20 @@
  const fs = require('fs');
  require('dotenv').config();
  const path = require('path');
+ const spawn = require('child_process').spawn;
+
+ const test = JSON.stringify(['hello from node to python', 'test from node']);
+ const py = spawn('python', [path.join(__dirname, '/log.py')]);
+ py.stdin.write(test);
+ py.stdin.end();
+
+ let dataOut = '';
+ py.stdout.on('data', (data) => {
+   dataOut += data;
+ });
+ py.stdout.on('close', () => {
+   console.log(dataOut);
+ });
 
  // Handles console.logs without an ESLint warning
  class con {
