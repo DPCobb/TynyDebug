@@ -7,8 +7,11 @@
 - [GitHub](https://github.com/DPCobb/TynyDebug)
 
 ## Install
-
-To install this app download or clone the repository and install the required
+The easiest way to install this tool is using NPM:
+```
+npm install tynydebug
+```
+To install this tool download or clone the repository and install the required
 packages for the project.
 
 ```
