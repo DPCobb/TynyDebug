@@ -165,18 +165,14 @@
    },
    // saves msg method to a seperate log
    saveMsg(data, locIn) {
-     const location = new loc(locIn);
      // get date and time
      const date = this.getDate();
      const time = this.getTime();
      // if no location information was sent
-     if (location.loc === undefined) {
-       location.loc = 'No Location Info';
-     }
      // if both debug and msgSave are true
      if (debug === 'true' && msgSave === 'true') {
        // create the entry
-       const msgLog = '-- MSG @ ' + time + ' (' + location.loc + '): ' + data + '\n';
+       const msgLog = '-- MSG @ ' + time + ' (' + locIn + '): ' + data + '\n';
        // append entry to todays log
        fs.appendFile('./logs/debug_MSG_' + date + '.log', msgLog, (err) => {
          if (err) throw err;
