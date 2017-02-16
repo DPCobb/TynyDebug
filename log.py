@@ -11,7 +11,7 @@ def log(data):
     print 'log'
 
 def main():
-    #get our data as an array from read_in()
+    # gets data array
     dataIn = read_in()
     print dataIn[0]
     print 'test python'
