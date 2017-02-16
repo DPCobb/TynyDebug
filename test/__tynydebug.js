@@ -1,4 +1,5 @@
 const expect = require('chai').expect;
+const assert = require('assert');
 const request = require('supertest');
 const debug = require('../tynydebug.js');
 

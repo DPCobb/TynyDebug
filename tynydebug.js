@@ -52,11 +52,7 @@
      // set date object
      const dateObj = new Date();
      // get date
-     const month = dateObj.getMonth() + 1;
-     const day = dateObj.getDate();
-     const year = dateObj.getFullYear();
-     // format date
-     const date = year + '_' + month + '_' + day;
+     const date = dateObj.toLocaleDateString();
      // return date
      return date;
    },
@@ -64,17 +60,7 @@
    getTime() {
        // set date obj
      const dateObj = new Date();
-     // get time
-     const h = dateObj.getHours();
-     let m = dateObj.getMinutes();
-     // if m is less than 9 add 0
-     if (m < 10) {
-       m = `${0}` + m;
-     }
-     // get seconds
-     const s = dateObj.getSeconds();
-     // format time
-     const time = h + ':' + m + ':' + s;
+     const time = dateObj.toLocaleTimeString();
      // return time
      return time;
    },
@@ -140,11 +126,11 @@
        logFile += logReq;
 
        // append the file to todays log and console.log the message
+       if (consoleDebug === 'true') {
+         cons.log(logMsg);
+       }
        fs.appendFile('./logs/debug_log_' + date + '.log', '\n' + logFile, (err) => {
          if (err) throw err;
-         if (consoleDebug === 'true') {
-           cons.log(logMsg);
-         }
        });
      }
    },
