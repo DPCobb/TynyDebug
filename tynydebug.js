@@ -129,7 +129,7 @@
        if (consoleDebug === 'true') {
          cons.log(logMsg);
        }
-       fs.appendFile('~/logs/debug_log_' + date + '.log', '\n' + logFile, (err) => {
+       fs.appendFile('../../logs/debug_log_' + date + '.log', '\n' + logFile, (err) => {
          if (err) throw err;
        });
      }
@@ -160,7 +160,7 @@
        // create the entry
        const msgLog = '-- MSG @ ' + time + ' (' + locIn + '): ' + data + '\n';
        // append entry to todays log
-       fs.appendFile('~/logs/debug_MSG_' + date + '.log', msgLog, (err) => {
+       fs.appendFile('../../logs/debug_MSG_' + date + '.log', msgLog, (err) => {
          if (err) throw err;
        });
      }
