@@ -7,6 +7,7 @@
  */
  const fs = require('fs');
  require('dotenv').config();
+ const path = require('path');
 
  // Handles console.logs without an ESLint warning
  class con {
@@ -49,12 +50,15 @@
  module.exports = {
      // Create a date for log files
    getDate() {
-     // set date object
-     const dateObj = new Date();
-     // get date
-     const date = dateObj.toLocaleDateString();
-     // return date
-     return date;
+    const dateObj = new Date();
+    // get date
+    const month = dateObj.getMonth() + 1;
+    const day = dateObj.getDate();
+    const year = dateObj.getFullYear();
+    // format date
+    const date = year + '_' + month + '_' + day;
+    // return date
+    return date;
    },
    // get a time for log events
    getTime() {
@@ -129,7 +133,7 @@
        if (consoleDebug === 'true') {
          cons.log(logMsg);
        }
-       fs.appendFile('../../logs/debug_log_' + date + '.log', '\n' + logFile, (err) => {
+       fs.appendFile(path.join(__dirname,'../../logs/debug_log_' + date + '.log'), '\n' + logFile, (err) => {
          if (err) throw err;
        });
      }
@@ -160,7 +164,7 @@
        // create the entry
        const msgLog = '-- MSG @ ' + time + ' (' + locIn + '): ' + data + '\n';
        // append entry to todays log
-       fs.appendFile('../../logs/debug_MSG_' + date + '.log', msgLog, (err) => {
+       fs.appendFile(path.join(__dirname, '../../logs/debug_MSG_' + date + '.log'), msgLog, (err) => {
          if (err) throw err;
        });
      }
