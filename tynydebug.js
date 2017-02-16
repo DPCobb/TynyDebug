@@ -50,15 +50,15 @@
  module.exports = {
      // Create a date for log files
    getDate() {
-    const dateObj = new Date();
-    // get date
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const year = dateObj.getFullYear();
-    // format date
-    const date = year + '_' + month + '_' + day;
-    // return date
-    return date;
+     const dateObj = new Date();
+     // get date
+     const month = dateObj.getMonth() + 1;
+     const day = dateObj.getDate();
+     const year = dateObj.getFullYear();
+     // format date
+     const date = year + '_' + month + '_' + day;
+     // return date
+     return date;
    },
    // get a time for log events
    getTime() {
@@ -133,7 +133,7 @@
        if (consoleDebug === 'true') {
          cons.log(logMsg);
        }
-       fs.appendFile(path.join(__dirname,'../../logs/debug_log_' + date + '.log'), '\n' + logFile, (err) => {
+       fs.appendFile(path.join(__dirname, '../../logs/debug_log_' + date + '.log'), '\n' + logFile, (err) => {
          if (err) throw err;
        });
      }
