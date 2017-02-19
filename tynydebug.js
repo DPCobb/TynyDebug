@@ -8,6 +8,7 @@
  const fs = require('fs');
  require('dotenv').config();
  const path = require('path');
+ const logFolder = process.env.LOG_FOLDER;
 
  // Handles console.logs without an ESLint warning
  class con {
@@ -133,7 +134,7 @@
        if (consoleDebug === 'true') {
          cons.log(logMsg);
        }
-       fs.appendFile(path.join(__dirname, '../../logs/debug_log_' + date + '.log'), '\n' + logFile, (err) => {
+       fs.appendFile(path.join(__dirname, logFolder + 'debug_log_' + date + '.log'), '\n' + logFile, (err) => {
          if (err) throw err;
        });
      }
