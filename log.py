@@ -3,7 +3,7 @@ import sys, json
 def read_in():
     data = sys.stdin.readlines()
     return json.loads(data[0])
-
+#log the data
 def log(data):
     msg = 'This is ' + data[0] + ' and it is ' + data[1]
     f = open("logs/testlog.txt", "a+")
