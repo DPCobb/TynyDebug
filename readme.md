@@ -1,4 +1,5 @@
 # Tyny Debug
+[ ![Codeship Status for DPCobb/TynyDebug](https://app.codeship.com/projects/9bbb6140-d912-0134-9120-061a5f46ec84/status?branch=master)](https://app.codeship.com/projects/203287)
 ## A node.js debugging tool
 - [Install](#install)
 - [Usage](#using-the-debugger)
