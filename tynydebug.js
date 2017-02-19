@@ -5,10 +5,7 @@
  * TynyDebug
  *
  */
- const fs = require('fs');
  require('dotenv').config();
- const path = require('path');
- const logFolder = process.env.LOG_FOLDER;
 
  // Handles console.logs without an ESLint warning
  class con {
@@ -130,13 +127,10 @@
        logFile += logData;
        logFile += logReq;
 
-       // append the file to todays log and console.log the message
+       // console.log the message
        if (consoleDebug === 'true') {
          cons.log(logMsg);
        }
-       fs.appendFile(path.join(__dirname, logFolder + 'debug_log_' + date + '.log'), '\n' + logFile, (err) => {
-         if (err) throw err;
-       });
      }
    },
    /* Msg acts like a standard console.log if debug is true and debug_console
@@ -164,10 +158,6 @@
      if (debug === 'true' && msgSave === 'true') {
        // create the entry
        const msgLog = '-- MSG @ ' + time + ' (' + locIn + '): ' + data + '\n';
-       // append entry to todays log
-       fs.appendFile(path.join(__dirname, '../../logs/debug_MSG_' + date + '.log'), msgLog, (err) => {
-         if (err) throw err;
-       });
      }
    },
  };
