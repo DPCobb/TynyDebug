@@ -52,18 +52,6 @@ class loc {
 const debug = process.env.DEBUG;
 
 module.exports = {
-  // Create a date for log files
-  getDate() {
-    const dateObj = new Date();
-    // get date
-    const month = dateObj.getMonth() + 1;
-    const day = dateObj.getDate();
-    const year = dateObj.getFullYear();
-    // format date
-    const date = year + '_' + month + '_' + day;
-    // return date
-    return date;
-  },
   // get a time for log events
   getTime() {
     // set date obj
