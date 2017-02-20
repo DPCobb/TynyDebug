@@ -83,7 +83,8 @@ module.exports = {
       const defaultColor = '\x1b[33m';
       // set up type title : error, success, warning
       let type = defaultColor + data.type.toUpperCase() + resetColor;
-      // check to see if there is data, if data isn't null and if the type is not error and is success or warn.
+      // check to see if there is data, if data isn't null and if the type is not error and is
+      // success or warn.
       if (data.verify && !data.verify.data && data.type !== 'error' && (data.type === 'success' || data.type === 'warn')) {
         // if you get here the type changes to warning
         data.type = 'warning - request returned null';
@@ -151,5 +152,49 @@ module.exports = {
     if (debug === 'true') {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
+  },
+
+  version: {
+    change(num, release) {
+      const fs = require('fs');
+
+      const npmPkgJSON = fs.readFileSync('./package.json');
+      const npmPkg = JSON.parse(npmPkgJSON);
+      const v = npmPkg.version.split('.');
+
+      switch (release) {
+        case 'major':
+          return `${num}.${v[1]}.${v[2]}`;
+        case 'minor':
+          return `${v[0]}.${num}.${v[2]}`;
+        case 'patch':
+          return `${v[0]}.${v[1]}.${num}`;
+        default:
+          return 'Invalid release type.';
+      }
+    },
+    inc(release) {
+      const fs = require('fs');
+
+      const npmPkgJSON = fs.readFileSync('./package.json');
+      const npmPkg = JSON.parse(npmPkgJSON);
+      const v = npmPkg.version.split('.');
+
+      let num;
+
+      switch (release) {
+        case 'major':
+          num = parseInt(v[0], 10) + 1;
+          return `${num}.${v[1]}.${v[2]}`;
+        case 'minor':
+          num = parseInt(v[1], 10) + 1;
+          return `${v[0]}.${num}.${v[2]}`;
+        case 'patch':
+          num = parseInt(v[2], 10) + 1;
+          return `${v[0]}.${v[1]}.${num}`;
+        default:
+          return 'Invalid release type.';
+      }
+    },
   },
 };
