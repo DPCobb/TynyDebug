@@ -105,8 +105,8 @@ Requested Data:
      id : 999999
 
 ```  
-The messages created by the debugger are the same in the console and in the daily log file.
-#### .msg(msg,loc)
+The messages created by the debugger is just a simple message that can be output with a message and location.
+#### .msg(msg, loc)
 This method acts like more of a traditional console.log. It displays a simple message and, if provided, location info. This feature and its log can both be turned off. The msg information is required and location is not.
 ```
 log.msg('Hello World from app.listen')
@@ -119,11 +119,7 @@ MSG: Hello World from app.listen
 MSG: Server Active, port 3000
 -- @ app.js
 ```
-Similar outputs will be created in the log file with the addition of the time of the event:
-```
--- MSG @ 12:11:28 (No Location Info): Hello World from app.listen
--- MSG @ 12:11:28 (app.js): Server Active, port 3000
-```
+
 This method is an easy way to troubleshoot features and methods or to test if data is being passed. It could also
 be used as strictly a log.
 
