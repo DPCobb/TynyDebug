@@ -84,9 +84,9 @@ module.exports = {
       // set up type title : error, success, warning
       let type = defaultColor + data.type.toUpperCase() + resetColor;
       // check to see if there is data, if data isn't null and if the type is not error
-      if (data.verify && !data.verify.data && data.type !== 'error') {
+      if (data.verify && !data.verify.data && data.type !== 'error' && (data.type === 'success' || data.type === 'warn')) {
         // if you get here the type changes to warning
-        data.type = 'warning - request returned null';
+          data.type = 'warning - request returned null';
       }
       // if type is success set the success title
       if (data.type === 'success') {
@@ -125,6 +125,7 @@ module.exports = {
           cons.error(logMsg);
           break;
         case 'warning':
+        case 'warning - request returned null':
           cons.warn(logMsg);
           break;
         default:
@@ -133,6 +134,7 @@ module.exports = {
             msg: `${data.type} is not a valid message type.`,
             location: data.location,
           });
+          break;
       }
     }
   },
