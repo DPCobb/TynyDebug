@@ -83,7 +83,8 @@ module.exports = {
       const defaultColor = '\x1b[33m';
       // set up type title : error, success, warning
       let type = defaultColor + data.type.toUpperCase() + resetColor;
-      // check to see if there is data, if data isn't null and if the type is not error and is success or warn.
+      // check to see if there is data, if data isn't null and if the type is not error and is
+      // success or warn.
       if (data.verify && !data.verify.data && data.type !== 'error' && (data.type === 'success' || data.type === 'warn')) {
         // if you get here the type changes to warning
         data.type = 'warning - request returned null';
@@ -151,5 +152,27 @@ module.exports = {
     if (debug === 'true') {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
+  },
+  updateVersion(current, release) {
+    const v = current.split('.');
+    let num;
+
+    if (v.length === 3) {
+      switch (release) {
+        case 'major':
+          num = parseInt(v[0], 10) + 1;
+          return `${num}.0.0`;
+        case 'minor':
+          num = parseInt(v[1], 10) + 1;
+          return `${v[0]}.${num}.0`;
+        case 'patch':
+          num = parseInt(v[2], 10) + 1;
+          return `${v[0]}.${v[1]}.${num}`;
+        default:
+          return 'Invalid release type.';
+      }
+    }
+
+    return 'Invalid version number.';
   },
 };
