@@ -49,6 +49,8 @@ class loc {
   }
 }
 
+const debug = process.env.DEBUG;
+
 module.exports = {
   // get a time for log events
   getTime() {
@@ -61,7 +63,7 @@ module.exports = {
   // send warning that debugging is active
   debugWarn() {
     // if debug is true, send warning msg
-    if (process.env.DEBUG === 'true') {
+    if (debug === 'true') {
       cons.log('**************************************** \n Debugging Mode is Active!\n\n****************************************\n');
     }
   },
@@ -70,7 +72,7 @@ module.exports = {
     const data = new msgHandle(dataIn);
     const time = this.getTime();
     // if debug is true
-    if (process.env.DEBUG === 'true') {
+    if (debug === 'true') {
       // set up variables
       let logData = '';
       let logReq = '';
@@ -84,7 +86,7 @@ module.exports = {
       // check to see if there is data, if data isn't null and if the type is not error
       if (data.verify && !data.verify.data && data.type !== 'error' && (data.type === 'success' || data.type === 'warn')) {
         // if you get here the type changes to warning
-          data.type = 'warning - request returned null';
+        data.type = 'warning - request returned null';
       }
       // if type is success set the success title
       if (data.type === 'success') {
@@ -146,7 +148,7 @@ module.exports = {
       // if no location data change loc to no info msg
       location.loc = 'No Location Info';
     }
-    if (process.env.DEBUG === 'true') {
+    if (debug === 'true') {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
   },
