@@ -5,168 +5,151 @@
  * TynyDebug
  *
  */
- const fs = require('fs');
- require('dotenv').config();
- const path = require('path');
+require('dotenv').config();
 
- // Handles console.logs without an ESLint warning
- class con {
-   // method log writes the msg to stdout
-   log(data) {
-     // data is the message
-     this.data = data;
-     // write to console
-     process.stdout.write(`${this.data}\n`);
-   }
- }
- // Instantiate con class
- const cons = new con();
+// Handles console.logs without an ESLint warning
+class con {
+  // method log writes the msg to the console
+  log(data) {
+    // data is the message
+    this.data = data;
+    // write to console
+    console.log('%s', data);
+  }
+  error(data) {
+    this.data = data;
+    console.error('%s', data);
+  }
+  warn(data) {
+    this.data = data;
+    console.warn('%s', data);
+  }
+}
+// Instantiate con class
+const cons = new con();
 
- // handles the log data for the debugger
- class msgHandle {
-   constructor(data) {
-     // Get request/response data from passed in event
-     this.type = data.type;
-     this.verify = data.data;
-     this.msg = data.msg;
-     this.location = data.location;
-     this.request = data.request;
-   }
- }
+// handles the log data for the debugger
+class msgHandle {
+  constructor(data) {
+    // Get request/response data from passed in event
+    this.type = data.type;
+    this.verify = data.data;
+    this.msg = data.msg;
+    this.location = data.location;
+    this.request = data.request;
+  }
+}
 
- // Location of a console.log event, used to check if location is undefined
- // in msg and saveMsg methods
- class loc {
-   constructor(data) {
-     // location information
-     this.loc = data;
-   }
- }
+// Location of a console.log event, used to check if location is undefined
+// in msg and saveMsg methods
+class loc {
+  constructor(data) {
+    // location information
+    this.loc = data;
+  }
+}
 
- const consoleDebug = process.env.DEBUG_CONSOLE;
- const debug = process.env.DEBUG;
- const msgSave = process.env.DEBUG_MSG_LOG;
+const debug = process.env.DEBUG;
 
- module.exports = {
-     // Create a date for log files
-   getDate() {
-     const dateObj = new Date();
-     // get date
-     const month = dateObj.getMonth() + 1;
-     const day = dateObj.getDate();
-     const year = dateObj.getFullYear();
-     // format date
-     const date = year + '_' + month + '_' + day;
-     // return date
-     return date;
-   },
-   // get a time for log events
-   getTime() {
-       // set date obj
-     const dateObj = new Date();
-     const time = dateObj.toLocaleTimeString();
-     // return time
-     return time;
-   },
-   // send warning that debugging is active
-   debugWarn() {
-       // if debug is true, send warning msg
-     if (debug === 'true') {
-       cons.log('**************************************** \n Debugging Mode is Active!\n\n****************************************\n');
-     }
-   },
-   // debug takes json data, logs to console and to log file
-   debug(dataIn) {
-     const data = new msgHandle(dataIn);
-     const date = this.getDate();
-     const time = this.getTime();
-     // if debug is true
-     if (debug === 'true') {
-         // set up variables
-       let logData = '';
-       let logReq = '';
-       // set console colors
-       const resetColor = '\x1b[0m';
-       const successColor = '\x1b[32m';
-       const errorColor = '\x1b[31m';
-       const defaultColor = '\x1b[33m';
-       // set up type title : error, success, warning
-       let type = defaultColor + data.type.toUpperCase() + resetColor;
-       // check to see if there is data, if data isn't null and if the type is not error
-       if (data.verify && !data.verify.data && data.type !== 'error') {
-           // if you get here the type changes to warning
-         data.type = 'warning - request returned null';
-       }
-       // if type is success set the success title
-       if (data.type === 'success') {
-         type = successColor + data.type.toUpperCase() + resetColor;
-       } else if (data.type === 'error') {
-         // if error set error title
-         type = errorColor + data.type.toUpperCase() + resetColor;
-       } else {
-         // set default
-         type = defaultColor + data.type.toUpperCase() + resetColor;
-       }
-       // header for actual console display
-       let logMsg = '\n**********\nEvent at ' + time + ' @ ' + data.location + '\n' + type + '\n' + data.msg;
-       // logFile doesn't print color but will print after \x1b ex [32mSUCCESS[0m will print
-       let logFile = '\n**********\nEvent at ' + time + ' @ ' + data.location + '\n' + data.type.toUpperCase() + '\n' + data.msg;
-       // if not an error display returned data from json
-       if (data.verify && data.type !== 'error') {
-         logData = '\nReturned Data: \n-- ' + JSON.stringify(data.verify).split(',').join('\n    ').replace(/[{}"]/g, ' ');
-       }
-       // if it is an error return the error string
-       if (data.type === 'error') {
-         logData = '\nReturned Data: \n ' + data.verify;
-       }
-       // if request info is sent display the request info
-       if (data.request) {
-         logReq = '\nRequested Data: \n-- ' + JSON.stringify(data.request).split(',').join('\n    ').replace(/[{}"]/g, ' ');
-       }
-       // create the log console and log file
-       logMsg += logData;
-       logMsg += logReq;
-       logFile += logData;
-       logFile += logReq;
+module.exports = {
+  // get a time for log events
+  getTime() {
+    // set date obj
+    const dateObj = new Date();
+    const time = dateObj.toLocaleTimeString();
+    // return time
+    return time;
+  },
+  // send warning that debugging is active
+  debugWarn() {
+    // if debug is true, send warning msg
+    if (debug === 'true') {
+      cons.log('**************************************** \n Debugging Mode is Active!\n\n****************************************\n');
+    }
+  },
+  // debug takes json data, logs to console and to log file
+  debug(dataIn) {
+    const data = new msgHandle(dataIn);
+    const time = this.getTime();
+    // if debug is true
+    if (debug === 'true') {
+      // set up variables
+      let logData = '';
+      let logReq = '';
+      // set console colors
+      const resetColor = '\x1b[0m';
+      const successColor = '\x1b[32m';
+      const errorColor = '\x1b[31m';
+      const defaultColor = '\x1b[33m';
+      // set up type title : error, success, warning
+      let type = defaultColor + data.type.toUpperCase() + resetColor;
+      // check to see if there is data, if data isn't null and if the type is not error
+      if (data.verify && !data.verify.data && data.type !== 'error' && (data.type === 'success' || data.type === 'warn')) {
+        // if you get here the type changes to warning
+        data.type = 'warning - request returned null';
+      }
+      // if type is success set the success title
+      if (data.type === 'success') {
+        type = successColor + data.type.toUpperCase() + resetColor;
+      } else if (data.type === 'error') {
+        // if error set error title
+        type = errorColor + data.type.toUpperCase() + resetColor;
+      } else {
+        // set default
+        type = defaultColor + data.type.toUpperCase() + resetColor;
+      }
+      // header for actual console display
+      let logMsg = '\n**********\nEvent at ' + time + ' @ ' + data.location + '\n' + type + '\n' + data.msg;
+      // if not an error display returned data from json
+      if (data.verify && data.type !== 'error') {
+        logData = '\nReturned Data: \n-- ' + JSON.stringify(data.verify).split(',').join('\n    ').replace(/[{}"]/g, ' ');
+      }
+      // if it is an error return the error string
+      if (data.type === 'error') {
+        logData = '\nReturned Data: \n ' + data.verify;
+      }
+      // if request info is sent display the request info
+      if (data.request) {
+        logReq = '\nRequested Data: \n-- ' + JSON.stringify(data.request).split(',').join('\n    ').replace(/[{}"]/g, ' ');
+      }
+      // create the log console and log file
+      logMsg += logData;
+      logMsg += logReq;
 
-       // append the file to todays log and console.log the message
-       if (consoleDebug === 'true') {
-         cons.log(logMsg);
-       }
-       fs.appendFile(path.join(__dirname, '../../logs/debug_log_' + date + '.log'), '\n' + logFile, (err) => {
-         if (err) throw err;
-       });
-     }
-   },
-   /* Msg acts like a standard console.log if debug is true and debug_console
-   is true, and doesn't append to log file */
-   msg(data, locIn) {
-     // instatiate loc class
-     const location = new loc(locIn);
-     // check if location information was given
-     if (location.loc === undefined) {
-       // if no location data change loc to no info msg
-       location.loc = 'No Location Info';
-     }
-     if (debug === 'true' && consoleDebug === 'true') {
-       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
-     }
-     this.saveMsg(data, location.loc);
-   },
-   // saves msg method to a seperate log
-   saveMsg(data, locIn) {
-     // get date and time
-     const date = this.getDate();
-     const time = this.getTime();
-     // if no location information was sent
-     // if both debug and msgSave are true
-     if (debug === 'true' && msgSave === 'true') {
-       // create the entry
-       const msgLog = '-- MSG @ ' + time + ' (' + locIn + '): ' + data + '\n';
-       // append entry to todays log
-       fs.appendFile(path.join(__dirname, '../../logs/debug_MSG_' + date + '.log'), msgLog, (err) => {
-         if (err) throw err;
-       });
-     }
-   },
- };
+      // console.log the message
+      switch (data.type) {
+        case 'success':
+          cons.log(logMsg);
+          break;
+        case 'error':
+          cons.error(logMsg);
+          break;
+        case 'warning':
+        case 'warning - request returned null':
+          cons.warn(logMsg);
+          break;
+        default:
+          this.debug({
+            type: 'error',
+            msg: `${data.type} is not a valid message type.`,
+            location: data.location,
+          });
+          break;
+      }
+    }
+  },
+  /* Msg acts like a standard console.log if debug is true and debug_console
+  is true, and doesn't append to log file */
+  msg(data, locIn) {
+    // instantiate loc class
+    const location = new loc(locIn);
+    // check if location information was given
+    if (location.loc === undefined) {
+      // if no location data change loc to no info msg
+      location.loc = 'No Location Info';
+    }
+    if (debug === 'true') {
+      cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
+    }
+  },
+};
