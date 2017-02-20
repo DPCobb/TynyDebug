@@ -35,43 +35,14 @@ $ npm install
 
 ```
 
-Next add a .env file to your project with the following fields:
-```
-DEBUG = true
-DEBUG_CONSOLE = true
-DEBUG_MSG_LOG = true
-```
+
 ## Using the Debugger
-There are two ways to run the app, with debug mode on or off. Running with all settings on true will create a daily log for both methods included and send messages to the console. Your .env file should contain the following
-entries:
+The DEBUG environment variable controls whether messages are output to the console. You can add this to a .env file like the following.
 ```
 DEBUG = true
-DEBUG_CONSOLE = true
-DEBUG_MSG_LOG = true
 ```
-These entries control the debugging tool, this tool is built to avoid using console.log and can easily control
-the display of messages on production apps. To turn off all debugging features change DEBUG to false.
-```
-DEBUG = false
-DEBUG_CONSOLE = true
-DEBUG_MSG_LOG = true
-```
-This will turn off all debug messages and log files. If you want to keep the debug log running as an activity log but do not want
-that information displayed in the console change DEBUG_CONSOLE to false.
-```
-DEBUG = true
-DEBUG_CONSOLE = false
-DEBUG_MSG_LOG = true
-```
-This will prevent debug messages from hitting the console. You can also choose to stop logging for the .msg() method by changing
-DEBUG_MSG_LOG to false.
-```
-DEBUG = true
-DEBUG_CONSOLE = true
-DEBUG_MSG_LOG = false
-```
-This will turn off the logging for the .msg() method, which acts more like a traditional console.log. The logs are created in the log
-folder and will create daily logs for the debug method (debug_log_YYYY_M_D.log) and the msg method (debug_MSG_YYYY_M_D.log)
+
+
 ### Available Debug Methods
 #### .debug(data)
 This method accepts a JSON object that should be structured the following way:
