@@ -49,8 +49,6 @@ class loc {
   }
 }
 
-const debug = process.env.DEBUG;
-
 module.exports = {
   // get a time for log events
   getTime() {
@@ -63,7 +61,7 @@ module.exports = {
   // send warning that debugging is active
   debugWarn() {
     // if debug is true, send warning msg
-    if (debug === 'true') {
+    if (process.env.DEBUG === 'true') {
       cons.log('**************************************** \n Debugging Mode is Active!\n\n****************************************\n');
     }
   },
@@ -72,7 +70,7 @@ module.exports = {
     const data = new msgHandle(dataIn);
     const time = this.getTime();
     // if debug is true
-    if (debug === 'true') {
+    if (process.env.DEBUG === 'true') {
       // set up variables
       let logData = '';
       let logReq = '';
@@ -148,7 +146,7 @@ module.exports = {
       // if no location data change loc to no info msg
       location.loc = 'No Location Info';
     }
-    if (debug === 'true') {
+    if (process.env.DEBUG === 'true') {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
   },
