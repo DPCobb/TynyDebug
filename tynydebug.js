@@ -153,35 +153,11 @@ module.exports = {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
   },
+  updateVersion(current, release) {
+    const v = current.split('.');
+    let num;
 
-  version: {
-    change(num, release) {
-      const fs = require('fs');
-
-      const npmPkgJSON = fs.readFileSync('./package.json');
-      const npmPkg = JSON.parse(npmPkgJSON);
-      const v = npmPkg.version.split('.');
-
-      switch (release) {
-        case 'major':
-          return `${num}.${v[1]}.${v[2]}`;
-        case 'minor':
-          return `${v[0]}.${num}.${v[2]}`;
-        case 'patch':
-          return `${v[0]}.${v[1]}.${num}`;
-        default:
-          return 'Invalid release type.';
-      }
-    },
-    inc(release) {
-      const fs = require('fs');
-
-      const npmPkgJSON = fs.readFileSync('./package.json');
-      const npmPkg = JSON.parse(npmPkgJSON);
-      const v = npmPkg.version.split('.');
-
-      let num;
-
+    if (v.length === 3) {
       switch (release) {
         case 'major':
           num = parseInt(v[0], 10) + 1;
@@ -195,6 +171,8 @@ module.exports = {
         default:
           return 'Invalid release type.';
       }
-    },
+    }
+
+    return 'Invalid version number.';
   },
 };
