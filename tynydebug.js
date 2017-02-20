@@ -117,7 +117,23 @@ module.exports = {
       logMsg += logReq;
 
       // console.log the message
-      cons.log(logMsg);
+      switch (data.type) {
+        case 'success':
+          cons.log(logMsg);
+          break;
+        case 'error':
+          cons.error(logMsg);
+          break;
+        case 'warning':
+          cons.warn(logMsg);
+          break;
+        default:
+          this.debug({
+            type: 'error',
+            msg: `${data.type} is not a valid message type.`,
+            location: data.location,
+          });
+      }
     }
   },
   /* Msg acts like a standard console.log if debug is true and debug_console
