@@ -79,6 +79,8 @@ describe('TynyDebug Utility Test', () => {
           msg: 'This is a test',
           location: '__tynydebug.js',
         });
+        let output;
+
         switch (status) {
           case 'success':
             expect(t.cons.log.callCount).to.equal(1);
@@ -91,7 +93,7 @@ describe('TynyDebug Utility Test', () => {
             expect(t.cons.warn.callCount).to.equal(2);
             break;
           default:
-            const output = t.cons.error.args[0][0];
+            output = t.cons.error.args[0][0];
             expect(output).to.include('invalid is not a valid message type');
             expect(t.cons.error.callCount).to.equal(2);
             break;
