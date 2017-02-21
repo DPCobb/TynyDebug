@@ -165,7 +165,7 @@
        // create the entry
        const msgLog = '-- MSG @ ' + time + ' (' + locIn + '): ' + data + '\n';
        // append entry to todays log
-       fs.appendFile(path.join(__dirname, '../../logs/debug_MSG_' + date + '.log'), msgLog, (err) => {
+       fs.appendFile(path.join(__dirname, logFolder + 'debug_MSG_' + date + '.log'), msgLog, (err) => {
          if (err) throw err;
        });
      }
