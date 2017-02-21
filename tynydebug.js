@@ -83,7 +83,7 @@ module.exports = {
       const defaultColor = '\x1b[33m';
       // set up type title : error, success, warning
       let type = defaultColor + data.type.toUpperCase() + resetColor;
-      // check to see if there is data, if data isn't null and if the type is not error and is 
+      // check to see if there is data, if data isn't null and if the type is not error and is
       // success or warn.
       if (data.verify && !data.verify.data && data.type !== 'error' && (data.type === 'success' || data.type === 'warn')) {
         // if you get here the type changes to warning
