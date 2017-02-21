@@ -178,10 +178,10 @@ module.exports = {
       switch (release) {
         case 'major':
           num = parseInt(v[0], 10) + 1;
-          return `${num}.${v[1]}.${v[2]}`;
+          return `${num}.0.0`;
         case 'minor':
           num = parseInt(v[1], 10) + 1;
-          return `${v[0]}.${num}.${v[2]}`;
+          return `${v[0]}.${num}.0`;
         case 'patch':
           num = parseInt(v[2], 10) + 1;
           return `${v[0]}.${v[1]}.${num}`;

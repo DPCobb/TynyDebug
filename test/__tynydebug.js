@@ -43,12 +43,12 @@ describe('TynyVersion Utility Test', () => {
     it('Update the major version.', () => {
       const newVer = version('1.3.2', 'major');
 
-      expect(newVer).to.equal('2.3.2');
+      expect(newVer).to.equal('2.0.0');
     });
     it('Update the minor version.', () => {
       const newVer = version('1.3.2', 'minor');
 
-      expect(newVer).to.equal('1.4.2');
+      expect(newVer).to.equal('1.4.0');
     });
     it('Update the patch version.', () => {
       const newVer = version('1.3.2', 'patch');
