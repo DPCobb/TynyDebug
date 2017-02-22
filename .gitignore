@@ -1,2 +1,7 @@
 node_modules
 .git
+coverage
+.vscode
+.env
+test.js
+logs
