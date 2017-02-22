@@ -8,6 +8,7 @@
 const fs = require('fs');
 require('dotenv').config();
 const path = require('path');
+
 const logFolder = process.env.LOG_FOLDER;
 
 // Handles console.logs without an ESLint warning
