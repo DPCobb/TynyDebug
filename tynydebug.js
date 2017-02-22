@@ -10,7 +10,7 @@
  const path = require('path');
  const spawn = require('child_process').spawn;
 
- const test = JSON.stringify(['hello from node to python', 'test from node']);
+ const test = JSON.stringify(['test']);
  const py = spawn('python', [path.join(__dirname, '/log.py')]);
  py.stdin.write(test);
  py.stdin.end();

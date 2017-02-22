@@ -1,11 +1,13 @@
-import sys, json
+import sys, json, os
 
 def read_in():
     data = sys.stdin.readlines()
     return json.loads(data[0])
 #log the data
 def log(data):
-    msg = 'This is ' + data[0] + ' and it is ' + data[1]
+    path = os.getcwd() + '/logs'
+    if not os.path.exists(path): os.makedirs(path)
+    msg = 'This is ' + data[0] + ' and it is ' + data[0]
     f = open("logs/testlog.txt", "a+")
     f.write(msg + '\n')
     print 'log'
