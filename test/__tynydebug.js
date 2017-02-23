@@ -3,6 +3,7 @@ const rewire = require('rewire');
 const sinon = require('sinon');
 const expect = require('chai').expect;
 const debug = require('../tynydebug.js');
+require('dotenv').config();
 
 
 describe('TynyDebug Utility Test', () => {
@@ -49,8 +50,7 @@ describe('TynyDebug Utility Test', () => {
         warn: sinon.spy(),
       };
 
-      debug.__set__('process.env.DEBUG', 'true');
-
+      debug.__set__('process.env.DEBUG', true);
       debug.__set__('cons.log', this.cons.log);
       debug.__set__('cons.error', this.cons.error);
       debug.__set__('cons.warn', this.cons.warn);

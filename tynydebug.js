@@ -154,6 +154,7 @@ module.exports = {
     if (debug === 'true') {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
+  },
   updateVersion(current, release) { // A function to semantically update the version number.
     const v = current.split('.'); // Split the version number apart at the .
     let num; // Variable for use in incrementing.
@@ -175,6 +176,5 @@ module.exports = {
     }
 
     return 'Invalid version number.'; // If the version number does not contain precisely 3 numbers return the error.
-
   },
 };
