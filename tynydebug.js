@@ -137,7 +137,6 @@ module.exports = {
           });
           break;
       }
-
     }
   },
   /* Msg acts like a standard console.log if debug is true and debug_console
