@@ -1,8 +1,9 @@
+
 const rewire = require('rewire');
 const sinon = require('sinon');
 const expect = require('chai').expect;
+const debug = require('../tynydebug.js');
 
-const debug = rewire('../tynydebug.js');
 
 describe('TynyDebug Utility Test', () => {
   describe('Testing Running WIthout Errors', () => {
@@ -105,6 +106,38 @@ describe('TynyDebug Utility Test', () => {
     });
     it('Tests the msg methods', () => {
       debug.msg('This is testing msg with no location');
+    });
+  });
+});
+
+const version = require('../tynydebug').updateVersion;
+
+describe('TynyVersion Utility Test', () => {
+  describe('Test Version Change Function', () => {
+    it('Update the major version.', () => {
+      const newVer = version('1.3.2', 'major');
+
+      expect(newVer).to.equal('2.0.0');
+    });
+    it('Update the minor version.', () => {
+      const newVer = version('1.3.2', 'minor');
+
+      expect(newVer).to.equal('1.4.0');
+    });
+    it('Update the patch version.', () => {
+      const newVer = version('1.3.2', 'patch');
+
+      expect(newVer).to.equal('1.3.3');
+    });
+    it('Bad release type entered.', () => {
+      const newVer = version('1.3.2', 'match');
+
+      expect(newVer).to.equal('Invalid release type.');
+    });
+    it('Bad version number entered.', () => {
+      const newVer = version('1.3.2.3', 'match');
+
+      expect(newVer).to.equal('Invalid version number.');
     });
   });
 });

@@ -137,12 +137,14 @@ module.exports = {
           });
           break;
       }
+
     }
   },
   /* Msg acts like a standard console.log if debug is true and debug_console
   is true, and doesn't append to log file */
   msg(data, locIn) {
     // instantiate loc class
+
     const location = new loc(locIn);
     // check if location information was given
     if (location.loc === undefined) {
@@ -152,5 +154,27 @@ module.exports = {
     if (debug === 'true') {
       cons.log('\x1b[37mMSG:\x1b[0m ' + data + '\n-- @ ' + location.loc);
     }
+  updateVersion(current, release) { // A function to semantically update the version number.
+    const v = current.split('.'); // Split the version number apart at the .
+    let num; // Variable for use in incrementing.
+
+    if (v.length === 3) { // If there are 3 numbers in the version.
+      switch (release) {
+        case 'major': // If the release is major.
+          num = parseInt(v[0], 10) + 1; // Add 1 to the major release.
+          return `${num}.0.0`; // Return the major release number with the minor and patch reset.
+        case 'minor': // If the release is minor.
+          num = parseInt(v[1], 10) + 1; // Add 1 to the minor release.
+          return `${v[0]}.${num}.0`; // Return the minor release number with the patch reset.
+        case 'patch': // If the release is a patch.
+          num = parseInt(v[2], 10) + 1; // Add 1 to the patch release.
+          return `${v[0]}.${v[1]}.${num}`; // Return the updated version.
+        default:
+          return 'Invalid release type.'; // If the release is not one of the above, return the error.
+      }
+    }
+
+    return 'Invalid version number.'; // If the version number does not contain precisely 3 numbers return the error.
+
   },
 };
